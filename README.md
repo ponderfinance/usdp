@@ -144,10 +144,6 @@ forge script script/DeployUSDPBitkub.s.sol:DeployUSDPBitkub \
 - **xKOI**: `0x6C8119d33fD43f6B254d041Cd5d2675586731dd5`
 - **KUSDT**: `0x7d984C24d2499D840eB3b7016077164e15E5faA6`
 
-<<<<<<< HEAD
-### USDP Contracts
-*To be filled after deployment*
-=======
 ### USDP Contracts (Phase 0 - KKUB Only)
 
 **Oracle System**:
@@ -174,12 +170,6 @@ forge script script/DeployUSDPBitkub.s.sol:DeployUSDPBitkub \
 - **PriceFeed**: `0xaB8E45e3955751b6d4cCA6685161c8FE4bF253CB`
 
 All contracts verified on [KubScan](https://www.kubscan.com).
-
-**Deployment Details**:
-- Block: 27,962,560
-- Gas Used: 25,981,697
-- Deployer: `0xc1951eF408265A3b90d07B0BE030e63CCc7da6c6`
->>>>>>> 4c6aa87 (deploy usdp on kubchain)
 
 ## Usage Examples
 
