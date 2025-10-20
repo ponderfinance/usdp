@@ -144,8 +144,42 @@ forge script script/DeployUSDPBitkub.s.sol:DeployUSDPBitkub \
 - **xKOI**: `0x6C8119d33fD43f6B254d041Cd5d2675586731dd5`
 - **KUSDT**: `0x7d984C24d2499D840eB3b7016077164e15E5faA6`
 
+<<<<<<< HEAD
 ### USDP Contracts
 *To be filled after deployment*
+=======
+### USDP Contracts (Phase 0 - KKUB Only)
+
+**Oracle System**:
+- **PonderOracleAdapter**: `0xC7408e585bf3a717AC224EA23781cFe358e5C5AE`
+- **MultiSourcePriceFeed**: `0x1E799eB8692f944a8A49Ca2da93e7C1de57ce9ff`
+
+**Core Contracts**:
+- **USDPToken**: `0x9359221a95DDE8BC4A43c1F4D5FaE35df98808A6`
+- **CollateralRegistry**: `0x055521069B0037D9Fb8A3a92f19C44DE9DD2e7a7`
+- **HintHelpers**: `0xD1A117fCFC94443b85c363c0907645DF7f9B01d9`
+- **MultiTroveGetter**: `0xd62BA94FDba9a468E900915a91f988d69056C249`
+
+**KKUB Branch**:
+- **AddressesRegistry**: `0x7f2CA4Cd1c71b0fB55Ad637306DA4A62d6a943E1`
+- **BorrowerOperations**: `0x4d3fA4600f5Ad08BeD357002829B4daFEFF04f8d`
+- **TroveManager**: `0x9a3AAd24767DF4cDF0B48508cc8C35e06860a135`
+- **TroveNFT**: `0x7D7589f8AD271fB7fDEE6C3a601231D2693C5099`
+- **StabilityPool**: `0x7fF104042C01b8DE4429482662CE1E7cE67e5135`
+- **ActivePool**: `0xf28635dd13B3e4842744e5a9A4d649ad7D1BBa1A`
+- **DefaultPool**: `0xc11562e2ceB1F4E11368789f19Cc67336935A2cA`
+- **GasPool**: `0x94E06e114FCeD71e111B2460b73f09e3700412FA`
+- **CollSurplusPool**: `0x799e263Ae307a9C4912aFc529e6F400FC4308466`
+- **SortedTroves**: `0x19817d043D64133439Ee75e5B59C003309764b7f`
+- **PriceFeed**: `0xaB8E45e3955751b6d4cCA6685161c8FE4bF253CB`
+
+All contracts verified on [KubScan](https://www.kubscan.com).
+
+**Deployment Details**:
+- Block: 27,962,560
+- Gas Used: 25,981,697
+- Deployer: `0xc1951eF408265A3b90d07B0BE030e63CCc7da6c6`
+>>>>>>> 4c6aa87 (deploy usdp on kubchain)
 
 ## Usage Examples
 
@@ -245,8 +279,7 @@ multiSourceFeed.setPonderAdapter(address(newAdapter));
 - **Stability Pool**: Provides liquidation backstop before redistribution
 
 ### Smart Contract Risks
-- **Liquity v2 Audit**: Base protocol audited, but fork changes introduce risk
-- **Oracle Adapter**: Custom adapter should be audited separately
+- **Liquity v2 Audit**: Base protocol audited
 - **Upgradeability**: Only oracle adapters are upgradeable (immutable core)
 
 ## Development
