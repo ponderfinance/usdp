@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
+import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
 /// @title PonderOracleAdapter
 /// @notice Adapts Ponder TWAP oracle to Bold's price feed interface
 /// @dev Uses KUSDT as BASE_TOKEN to avoid chicken-egg problem with USDP
@@ -19,7 +22,7 @@ interface ILiquidStakingToken {
     function getExchangeRate() external view returns (uint256);  // 18 decimals
 }
 
-contract PonderOracleAdapter {
+contract PonderOracleAdapter is Ownable2Step {
     IPonderPriceOracle public immutable ORACLE;
     IPonderFactory public immutable FACTORY;
     address public immutable BASE_TOKEN;  // KUSDT initially
@@ -27,31 +30,22 @@ contract PonderOracleAdapter {
     uint32 public constant TWAP_PERIOD = 14400;  // 4 hours
     uint256 public constant STALENESS_THRESHOLD = 1200;  // 20 minutes
 
-    address public owner;
-
     mapping(address => address) public collateralToPair;  // KKUB => KUSDT/KKUB pair
     mapping(address => bool) public isLST;  // true for stKUB, wstKUB
     mapping(address => address) public lstToUnderlying;  // stKUB => KKUB
 
     error StalePrice();
     error InvalidCollateral();
-    error Unauthorized();
     error PairNotFound();
 
     event CollateralRegistered(address indexed collateral, address indexed pair);
     event LSTRegistered(address indexed lst, address indexed underlying);
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    modifier onlyOwner() {
-        if (msg.sender != owner) revert Unauthorized();
-        _;
-    }
 
     constructor(
         address _oracle,
         address _factory,
         address _baseToken  // Use KUSDT (0x7d984C24d2499D840eB3b7016077164e15E5faA6 on Bitkub)
-    ) {
+    ) Ownable(msg.sender) {
         require(_oracle != address(0), "Invalid oracle address");
         require(_factory != address(0), "Invalid factory address");
         require(_baseToken != address(0), "Invalid base token address");
@@ -59,7 +53,6 @@ contract PonderOracleAdapter {
         ORACLE = IPonderPriceOracle(_oracle);
         FACTORY = IPonderFactory(_factory);
         BASE_TOKEN = _baseToken;
-        owner = msg.sender;
     }
 
     /// @notice Register collateral with its trading pair
@@ -114,14 +107,5 @@ contract PonderOracleAdapter {
 
         uint256 lastUpdate = ORACLE.lastUpdateTime(pair);
         return block.timestamp <= lastUpdate + STALENESS_THRESHOLD;
-    }
-
-    /// @notice Transfer ownership to a new address
-    /// @param newOwner The new owner address
-    function transferOwnership(address newOwner) external onlyOwner {
-        require(newOwner != address(0), "Invalid new owner");
-        address oldOwner = owner;
-        owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
     }
 }

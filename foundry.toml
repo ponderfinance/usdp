@@ -2,5 +2,15 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+solc = "0.8.24"
+evm_version = "paris"  # Bitkub Chain compatibility
+
+# Optimizer settings
+optimizer = true
+optimizer_runs = 1  # Low runs to minimize bytecode size for Bitkub's 24KB limit
+
+# Ignore contract size warnings (3860 and 5574)
+# TroveManager and BorrowerOperations are intentionally >24KB
+ignored_error_codes = [3860, 5574]
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

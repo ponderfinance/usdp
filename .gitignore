@@ -1,0 +1,36 @@
+# Compiler files
+cache/
+out/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Docs
+docs/
+DEPLOYMENT.md
+
+# Dotenv file
+.env
+
+# Private keys (never commit!)
+*.private
+*.key
+private_key.txt
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Temporary scripts
+verify_all.sh
+
+# Node modules (if any)
+node_modules/
