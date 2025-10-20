@@ -241,20 +241,26 @@ For stKUB and wstKUB:
 
 This ensures LST prices reflect both market price and accrued staking rewards.
 
-### Upgrading Oracle (Future)
+### Future Oracle Upgrades
 
-When USDP gains liquidity:
+The protocol can upgrade to alternative oracle sources via the MultiSourcePriceFeed:
+
+**Option: Bitkub Official Oracle**
+
+When Bitkub Chain launches official price oracles (e.g., USDT/KUB, KKUB/USDT), the protocol can migrate:
+
 ```solidity
-// Deploy new adapter with USDP as BASE_TOKEN
-PonderOracleAdapter newAdapter = new PonderOracleAdapter(
-    PONDER_ORACLE,
-    PONDER_FACTORY,
-    address(usdpToken)  // Now use USDP instead of KUSDT
+// Deploy adapter for Bitkub's official oracle
+BitkubOracleAdapter bitkubAdapter = new BitkubOracleAdapter(
+    BITKUB_ORACLE_ADDRESS,
+    KUSDT  // Still price in USD terms
 );
 
 // Upgrade (owner only)
-multiSourceFeed.setPonderAdapter(address(newAdapter));
+multiSourceFeed.setPonderAdapter(address(bitkubAdapter));
 ```
+
+This allows migration to more robust oracle infrastructure as it becomes available on Bitkub Chain, while keeping all core contracts immutable. The MultiSourcePriceFeed architecture was designed for this flexibility.
 
 ## Security Considerations
 
@@ -299,8 +305,8 @@ usdp-protocol/
 │   └── DeployUSDPBitkub.s.sol         # Deployment script
 ├── test/
 │   └── ...                            # Tests
-└── docs/
-    └── RFC-001-USDP-Deployment.md     # Deployment RFC
+└── addresses/
+    └── 96.json                        # Bitkub mainnet deployment addresses
 ```
 
 ### Adding New Collateral
